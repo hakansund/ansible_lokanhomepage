@@ -1,0 +1,10 @@
+---
+- include: common.yml
+- include: user.yml
+- include: postgresql.yml
+- include: code.yml
+- include: nginx.yml
+- include: redis.yml
+- include: supervisor.yml
+- include: django.yml
+- include: security.yml

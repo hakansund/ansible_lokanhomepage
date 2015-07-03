@@ -1,0 +1,8 @@
+#!/bin/bash
+
+cd {{ code_dir }}
+source {{ venv_dir }}/bin/activate
+
+exec celery \
+  --app=lokanhomepage.celery:app worker \
+  --loglevel=INFO

@@ -1,0 +1,17 @@
+---
+- name: ensure nginx is installed
+  dnf: name=nginx
+
+- name: create nginx config
+  template: src=nginx_config.j2 dest=/etc/nginx/nginx.conf
+  notify: reload nginx
+
+- name: create nginx site config
+  template: src=nginx_site_config.j2 dest=/etc/nginx/conf.d/{{ app_name }}.conf
+  notify: reload nginx
+
+- name: start and enable nginx
+  service: name=nginx state=started enabled=yes
+
+- name: activate httpd_can_network_connect in selinux
+  seboolean: name=httpd_can_network_connect state=yes persistent=yes

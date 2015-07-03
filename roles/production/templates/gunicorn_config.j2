@@ -1,0 +1,8 @@
+[program:gunicorn]
+command = {{ code_dir }}/gunicorn_start
+directory = {{ code_dir }}
+user = {{ app_name }}
+autostart = true
+autorestart = true
+stdout_logfile = /var/log/supervisor/gunicorn.log
+stderr_logfile = /var/log/supervisor/gunicorn_err.log

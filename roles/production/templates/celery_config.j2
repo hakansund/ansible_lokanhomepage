@@ -1,0 +1,12 @@
+[program:celery]
+command = {{ code_dir }}/celery_start
+directory = {{ code_dir }}
+user = {{ app_name }}
+numprocs = 1
+stdout_logfile = /var/log/supervisor/celery.log
+stderr_logfile = /var/log/supervisor/celery_err.log
+autostart = true
+autorestart = true
+startsecs = 10
+stopwaitsecs = 600
+killasgroup = true

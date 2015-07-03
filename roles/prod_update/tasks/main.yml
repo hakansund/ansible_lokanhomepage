@@ -1,0 +1,28 @@
+---
+- name: fetch source code
+  git: dest="{{ code_dir }}" repo="{{ repo_url }}" accept_hostkey=yes
+  notify: restart gunicorn
+
+- name: update yamjam config
+  template:
+    src: ../../production/templates/config.yaml.j2
+    dest: "{{ code_dir }}/config.yaml"
+  notify: restart gunicorn
+
+- name: install requirements in virtual environment
+  pip: requirements="{{ req_path }}" virtualenv="{{ venv_dir }}" state=latest
+  notify: restart gunicorn
+
+- name: collect the static files
+  django_manage:
+    app_path: "{{ code_dir }}"
+    command: collectstatic
+    settings: lokanhomepage.settings
+    virtualenv: "{{ venv_dir }}"
+
+- name: migrate database
+  django_manage:
+    app_path: "{{ code_dir }}"
+    command: migrate
+    settings: lokanhomepage.settings
+    virtualenv: "{{ venv_dir }}"

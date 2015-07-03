@@ -1,0 +1,6 @@
+---
+- name: create group
+  group: name={{ app_name }}
+
+- name: create user
+  user: name={{ app_name }} group={{ app_name }}

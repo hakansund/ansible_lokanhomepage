@@ -1,0 +1,28 @@
+---
+- name: ensure postgresql is installed
+  dnf: name={{ item }}
+  with_items:
+    - postgresql-server
+    - postgresql-devel
+    - python-psycopg2
+
+- name: initiate database
+  command: postgresql-setup initdb
+  args:
+    creates: /var/lib/pgsql/data/postgresql.conf
+
+- name: create postgresql config
+  template: src=pg_hba.conf.j2 dest=/var/lib/pgsql/data/pg_hba.conf
+
+- name: start and enable postgresql
+  service: name=postgresql state=started enabled=yes
+  
+- name: create postgres user
+  postgresql_user: name={{ database_user }} password={{ database_password }}
+  become: yes
+  become_user: postgres
+
+- name: create database
+  postgresql_db: name={{ database_name }} owner={{ database_user }}
+  become: yes
+  become_user: postgres

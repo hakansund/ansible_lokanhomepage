@@ -1,0 +1,17 @@
+---
+- name: ensure git is installed
+  dnf: name=git
+
+- name: create virtual environment
+  command: pyvenv {{ venv_dir }}
+  args:
+    creates: "{{ venv_dir }}"
+
+- name: fetch source code
+  git: dest="{{ code_dir }}" repo="{{ repo_url }}" accept_hostkey=yes
+
+- name: install requirements in virtual environment
+  pip: requirements="{{ req_path }}" virtualenv="{{ venv_dir }}"
+
+- name: create yamjam config
+  template: src=config.yaml.j2 dest="{{ code_dir }}/config.yaml"

@@ -1,0 +1,6 @@
+---
+- name: reload sshd
+  service: name=sshd state=reloaded
+
+- name: reload nginx
+  service: name=nginx state=reloaded

@@ -1,0 +1,13 @@
+---
+- name: ensure redis is installed
+  dnf: name=redis
+
+- name: enable daemonization of redis-server
+  lineinfile:
+    dest: /etc/redis.conf
+    regexp: "^daemonize"
+    line: "daemonize yes"
+    state: present
+
+- name: start and enable redis-server
+  service: name=redis state=started enabled=yes

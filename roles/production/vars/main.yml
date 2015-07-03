@@ -1,0 +1,13 @@
+---
+app_name: lokanhomepage
+webapps_dir: /webapps
+code_dir: "{{ webapps_dir }}/{{ app_name }}"
+venv_dir: "{{ webapps_dir }}/{{ app_name }}_venv"
+req_path: "{{ code_dir }}/requirements/production.txt"
+repo_url: https://github.com/hakansund/lokanhomepage.git
+static_dir: /var/www
+debug: False
+template_debug: False
+allowed_hosts: ['lokan.org', 'www.lokan.org']
+extra_installed_apps: [gunicorn, defender]
+extra_middleware_classes: [defender.middleware.FailedLoginMiddleware]

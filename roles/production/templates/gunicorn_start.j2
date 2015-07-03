@@ -1,0 +1,19 @@
+#!/bin/bash
+
+NAME={{ app_name }}
+DJANGODIR={{ code_dir }}
+USER={{ app_name }}
+GROUP={{ app_name }}
+NUM_WORKERS=3
+DJANGO_WSGI_MODULE={{ app_name }}.wsgi
+
+cd $DJANGODIR
+source {{ venv_dir }}/bin/activate
+export PYTHONPATH=$DJANGODIR:$PYTHONPATH
+
+exec {{ venv_dir }}/bin/gunicorn ${DJANGO_WSGI_MODULE} \
+  --name $NAME \
+  --workers $NUM_WORKERS \
+  --user=$USER --group=$GROUP \
+  --log-level=debug \
+  --log-file=-
