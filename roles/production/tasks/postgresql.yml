@@ -1,22 +1,12 @@
 ---
 - name: ensure postgresql is installed
-  dnf: name={{ item }}
+  apt: name={{ item }}
   with_items:
-    - postgresql-server
-    - postgresql-devel
+    - postgresql
+    - libpq-dev
     - python-psycopg2
+    - python3-psycopg2
 
-- name: initiate database
-  command: postgresql-setup initdb
-  args:
-    creates: /var/lib/pgsql/data/postgresql.conf
-
-- name: create postgresql config
-  template: src=pg_hba.conf.j2 dest=/var/lib/pgsql/data/pg_hba.conf
-
-- name: start and enable postgresql
-  service: name=postgresql state=started enabled=yes
-  
 - name: create postgres user
   postgresql_user: name={{ database_user }} password={{ database_password }}
   become: yes

@@ -1,9 +1,9 @@
 ---
 - name: ensure supervisor is installed
-  dnf: name=supervisor
+  apt: name=supervisor
 
 - name: create celery conf file
-  template: src=celery_config.j2 dest=/etc/supervisord.d/celery.ini
+  template: src=celery_config.j2 dest=/etc/supervisor/conf.d/celery.conf
 
 - name: create celery start script
   template:
@@ -13,7 +13,7 @@
     mode: u+x
 
 - name: create gunicorn conf file
-  template: src=gunicorn_config.j2 dest=/etc/supervisord.d/gunicorn.ini
+  template: src=gunicorn_config.j2 dest=/etc/supervisor/conf.d/gunicorn.conf
 
 - name: create gunicorn start script
   template:
@@ -23,7 +23,7 @@
     mode: u+x
 
 - name: start and enable supervisor
-  service: name=supervisord state=started enabled=yes
+  service: name=supervisor state=started enabled=yes
 
 - name: start celery
   supervisorctl: name=celery state=started

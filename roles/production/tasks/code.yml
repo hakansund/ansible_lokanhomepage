@@ -1,9 +1,9 @@
 ---
 - name: ensure git is installed
-  dnf: name=git
+  apt: name=git
 
 - name: create virtual environment
-  command: pyvenv {{ venv_dir }}
+  command: virtualenv {{ venv_dir }} -p python3
   args:
     creates: "{{ venv_dir }}"
 

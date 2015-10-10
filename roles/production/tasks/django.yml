@@ -5,7 +5,6 @@
     state: directory
     owner: "{{ app_name }}"
     group: "{{ app_name }}"
-    setype: httpd_sys_content_t
 
 - name: collect the static files
   django_manage:
@@ -17,6 +16,17 @@
 - name: migrate database
   django_manage:
     app_path: "{{ code_dir }}"
+    command: migrate auth
+    settings: lokanhomepage.settings
+    virtualenv: "{{ venv_dir }}"
+  become: yes
+  become_user: "{{ database_user }}"
+
+- name: migrate database
+  django_manage:
+    app_path: "{{ code_dir }}"
     command: migrate
     settings: lokanhomepage.settings
     virtualenv: "{{ venv_dir }}"
+  become: yes
+  become_user: "{{ database_user }}"

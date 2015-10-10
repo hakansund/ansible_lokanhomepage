@@ -5,4 +5,6 @@
     regexp: "^PasswordAuthentication"
     line: "PasswordAuthentication no"
     state: present
-  notify: reload sshd
+
+- name: reload sshd
+  service: name=ssh state=reloaded

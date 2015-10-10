@@ -1,0 +1,6 @@
+---
+- name: ensure python-dev and python-virtualenv is installed
+  apt: name={{ item }}
+  with_items:
+    - python3-dev
+    - python-virtualenv

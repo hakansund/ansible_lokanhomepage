@@ -26,3 +26,4 @@
     command: migrate
     settings: lokanhomepage.settings
     virtualenv: "{{ venv_dir }}"
+  become_user: "{{ database_user }}"
