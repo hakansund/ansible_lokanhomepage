@@ -1,8 +1,0 @@
----
-- hosts: localhost
-  connection: local
-  vars_files:
-    - roles/dev/vars/main.yml
-    - roles/dev/vars/secrets.yml
-  roles:
-    - dev_update
